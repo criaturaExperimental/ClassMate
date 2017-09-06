@@ -11,14 +11,15 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:extension.classMate"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "extension.classMate",
+                "category": "ClassMate: ",
+                "title": "Show me the classes"
             }
         ]
     },
