@@ -5,3 +5,5 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 - Initial release
+    - Displays results on output
+    - Shows the total count for unique classes
