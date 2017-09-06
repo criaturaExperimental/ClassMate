@@ -2,17 +2,19 @@ import {window, commands, Disposable, ExtensionContext, StatusBarAlignment, Stat
 
 export function activate(context: ExtensionContext) {
 
-    // create a new word counter
-    let wordCounter = new WordCounter();
     let classSeeker = new ClassSeeker();
 
     let disposable = commands.registerCommand('extension.classMate', () => {
-        wordCounter.updateWordCount();
-        classSeeker.updateClasses();
+        const classesArray = classSeeker.updateClasses();
+        let outputPanel = window.createOutputChannel("CSS classes");
+        outputPanel.appendLine(`There are ${classesArray.length} classes present in your document:`);
+        outputPanel.appendLine(classesArray.join('\n'));
+        outputPanel.show(true);
+        console.log('Time to get classy!');
     });
 
     // Add to a list of disposables which are disposed when this extension is deactivated.
-    context.subscriptions.push(wordCounter);
+    context.subscriptions.push(classSeeker);
     context.subscriptions.push(disposable);
 }
 
@@ -26,6 +28,7 @@ class ClassSeeker {
         }
         let doc = editor.document;
         let classNames = this.getClasses(doc);
+        return classNames
     }
 
     public getClasses(doc: TextDocument) {
@@ -51,56 +54,8 @@ class ClassSeeker {
 
         return unique;
     }
-}
-
-class WordCounter {
-
-    private _statusBarItem: StatusBarItem;
-
-    public updateWordCount() {
-
-        // Create as needed
-        if (!this._statusBarItem) {
-            this._statusBarItem = window.createStatusBarItem(StatusBarAlignment.Left);
-        }
-
-        // Get the current text editor
-        let editor = window.activeTextEditor;
-        if (!editor) {
-            this._statusBarItem.hide();
-            return;
-        }
-
-        let doc = editor.document;
-
-        // Only update status if an Markdown file
-        if (doc.languageId === "html") {
-            let wordCount = this._getWordCount(doc);
-
-            // Update the status bar
-            this._statusBarItem.text = wordCount !== 1 ? `${wordCount} Words` : '1 Word';
-            this._statusBarItem.show();
-        } else {
-            this._statusBarItem.hide();
-        }
-    }
-
-    public _getWordCount(doc: TextDocument): number {
-
-        let docContent = doc.getText();
-
-        // Parse out unwanted whitespace so the split is accurate
-        docContent = docContent.replace(/(< ([^>]+)<)/g, '').replace(/\s+/g, ' ');
-        docContent = docContent.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-        let wordCount = 0;
-        if (docContent != "") {
-            wordCount = docContent.split(" ").length;
-        }
-
-        return wordCount;
-    }
 
     dispose() {
-        this._statusBarItem.dispose();
+
     }
 }
