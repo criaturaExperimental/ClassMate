@@ -1,25 +1,56 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the necessary extensibility types to use in your code below
 import {window, commands, Disposable, ExtensionContext, StatusBarAlignment, StatusBarItem, TextDocument} from 'vscode';
 
-// This method is called when your extension is activated. Activation is
-// controlled by the activation events defined in package.json.
 export function activate(context: ExtensionContext) {
-
-    // Use the console to output diagnostic information (console.log) and errors (console.error).
-    // This line of code will only be executed once when your extension is activated.
-    console.log('Congratulations, "ClassMate" is now active!');
 
     // create a new word counter
     let wordCounter = new WordCounter();
+    let classSeeker = new ClassSeeker();
 
     let disposable = commands.registerCommand('extension.classMate', () => {
         wordCounter.updateWordCount();
+        classSeeker.updateClasses();
     });
 
     // Add to a list of disposables which are disposed when this extension is deactivated.
     context.subscriptions.push(wordCounter);
     context.subscriptions.push(disposable);
+}
+
+class ClassSeeker {
+    public updateClasses() {
+        // Get the current text editor
+        let editor = window.activeTextEditor;
+        if (!editor) {
+            console.log('no file in editor');
+            return;
+        }
+        let doc = editor.document;
+        let classNames = this.getClasses(doc);
+    }
+
+    public getClasses(doc: TextDocument) {
+        let docContent = doc.getText();
+        let result = this.searchClasses(docContent);
+        return result;
+    }
+
+    public searchClasses(rawText: string) {
+        const patternClass = /class="([^":{}]+)"/g;
+        const patternClassName = /"((?:\\.|[^"\\])*)"/g;
+
+        let res = rawText.match(patternClass);
+        let final = [];
+
+        res.forEach(function(item) {
+            let input;
+            input = item.match(patternClassName)[0].replace(/"/g, "").split(" ");
+            final = final.concat(input);
+        });
+        // make array unique
+        const unique = final.filter((v, i, a) => a.indexOf(v) === i);
+
+        return unique;
+    }
 }
 
 class WordCounter {
