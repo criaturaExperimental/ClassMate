@@ -50,7 +50,7 @@ class ClassSeeker {
             final = final.concat(input);
         });
         // make array unique
-        const unique = final.filter((v, i, a) => a.indexOf(v) === i);
+        const unique = final.filter((v, i, a) => a.indexOf(v) === i).sort();
 
         return unique;
     }
