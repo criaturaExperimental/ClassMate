@@ -3,6 +3,13 @@
     "displayName": "ClassMate",
     "description": "Displays all the classes present in an HTML file",
     "version": "0.0.1",
+    "author": {
+        "name": "Lucas deGomez"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/criaturaExperimental/ClassMate"
+    },
     "publisher": "lucasdegomez",
     "engines": {
         "vscode": "^1.15.0"
@@ -10,6 +17,10 @@
     "categories": [
         "Other"
     ],
+    "galleryBanner": {
+        "color": "#5481ec",
+        "theme": "light"
+    },
     "activationEvents": [
         "onCommand:extension.classMate"
     ],

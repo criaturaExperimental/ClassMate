@@ -1,7 +1,5 @@
 # classmate VS code extension
 
-[GitHub repo](https://github.com/criaturaExperimental/ClassMate)
-
 > Current state **WIP**.
 
 Displays all the classes present in your HTML document.
