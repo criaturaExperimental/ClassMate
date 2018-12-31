@@ -2,7 +2,7 @@
     "name": "classmate",
     "displayName": "ClassMate",
     "description": "Displays all the classes present in an HTML file",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "author": {
         "name": "Lucas deGomez"
     },
