@@ -23,15 +23,21 @@
     },
     "icon": "/icon.png",
     "activationEvents": [
-        "onCommand:extension.classMate"
+        "onCommand:extension.showUnique",
+        "onCommand:extension.showAll"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.classMate",
+                "command": "extension.showUnique",
                 "category": "ClassMate: ",
-                "title": "Show me the classes"
+                "title": "Show unique classes"
+            },
+            {
+                "command": "extension.showAll",
+                "category": "ClassMate: ",
+                "title": "Show all the classes"
             }
         ]
     },

@@ -4,8 +4,8 @@ export function activate(context: ExtensionContext) {
 
     let classSeeker = new ClassSeeker();
 
-    let disposable = commands.registerCommand('extension.classMate', () => {
-        const classesArray = classSeeker.updateClasses();
+    let disposableUnique = commands.registerCommand('extension.showUnique', () => {
+        const classesArray = classSeeker.updateClasses(true);
         let outputPanel = window.createOutputChannel("CSS classes");
         outputPanel.appendLine(`There are ${classesArray.length} classes present in your document:`);
         outputPanel.appendLine(classesArray.join('\n'));
@@ -13,13 +13,23 @@ export function activate(context: ExtensionContext) {
         console.log('Time to get classy!');
     });
 
+    let disposableAll = commands.registerCommand('extension.showAll', () => {
+        const classesArray = classSeeker.updateClasses(false);
+        let outputPanel = window.createOutputChannel("CSS classes");
+        outputPanel.appendLine(`There are ${classesArray.length} classes present in your document:`);
+        outputPanel.appendLine(classesArray.join('\n'));
+        outputPanel.show(true);
+        console.log('Time to get classy!');
+    })
+
     // Add to a list of disposables which are disposed when this extension is deactivated.
     context.subscriptions.push(classSeeker);
-    context.subscriptions.push(disposable);
+    context.subscriptions.push(disposableUnique);
+    context.subscriptions.push(disposableAll);
 }
 
 class ClassSeeker {
-    public updateClasses() {
+    public updateClasses(unique: Boolean) {
         // Get the current text editor
         let editor = window.activeTextEditor;
         if (!editor) {
@@ -27,13 +37,18 @@ class ClassSeeker {
             return;
         }
         let doc = editor.document;
-        let classNames = this.getClasses(doc);
+        let classNames = this.getClasses(doc, unique);
         return classNames
     }
 
-    public getClasses(doc: TextDocument) {
+    public getClasses(doc: TextDocument, unique: Boolean) {
+        let result;
         let docContent = doc.getText();
-        let result = this.searchClasses(docContent);
+        if (unique) {
+            result = this.filterUnique(this.searchClasses(docContent));
+        } else {
+            result = this.searchClasses(docContent);
+        }
         return result;
     }
 
@@ -49,10 +64,11 @@ class ClassSeeker {
             input = item.match(patternClassName)[0].replace(/"/g, "").split(" ");
             final = final.concat(input);
         });
-        // make array unique
-        const unique = final.filter((v, i, a) => a.indexOf(v) === i).sort();
+        return final.sort();
+    }
 
-        return unique;
+    public filterUnique(array: any){
+        return array.filter((v, i, a) => a.indexOf(v) === i);
     }
 
     dispose() {
