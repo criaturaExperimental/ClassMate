@@ -54,7 +54,7 @@ class ClassSeeker {
         return result;
     }
 
-    public searchClasses(rawText: string) {
+    public searchClasses(rawText: String) {
         const patternClass = /class="([^":{}]+)"/g;
         const patternClassName = /"((?:\\.|[^"\\])*)"/g;
 
@@ -69,7 +69,7 @@ class ClassSeeker {
         return final.sort();
     }
 
-    public filterUnique(array: any){
+    public filterUnique(array: Any){
         return array.filter((v, i, a) => a.indexOf(v) === i);
     }
 
