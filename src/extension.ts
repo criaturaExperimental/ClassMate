@@ -4,13 +4,13 @@ export function activate(context: ExtensionContext) {
 
     let classSeeker = new ClassSeeker();
 
-    let disposableUnique = commands.registerCommand('extension.showUnique', () => {
+    let showUniqueClasses = commands.registerCommand('extension.showUnique', () => {
         const classesArray = classSeeker.updateClasses(true);
         displayList(classesArray, 'unique');
         console.log('Time to get unique and classy!');
     });
 
-    let disposableAll = commands.registerCommand('extension.showAll', () => {
+    let showAllClasses = commands.registerCommand('extension.showAll', () => {
         const classesArray = classSeeker.updateClasses(false);
         displayList(classesArray, 'total');
         console.log('Time to get classy!');
@@ -18,16 +18,18 @@ export function activate(context: ExtensionContext) {
 
     function displayList(classes: Array<string>, message: String) {
         let outputPanel = window.createOutputChannel("HTML classes");
-        outputPanel.appendLine(`There are ${classes.length} ${message} classes present in your document:`);
+        const output = `There are ${classes.length} ${message} classes present in your document:`
+        outputPanel.appendLine(output);
         outputPanel.appendLine(classes.join('\n'));
+        outputPanel.appendLine(output);
         outputPanel.show(true);
         console.log('Time to get totally classy!');
     }
 
     // Add to a list of disposables which are disposed when this extension is deactivated.
     context.subscriptions.push(classSeeker);
-    context.subscriptions.push(disposableUnique);
-    context.subscriptions.push(disposableAll);
+    context.subscriptions.push(showUniqueClasses);
+    context.subscriptions.push(showAllClasses);
 }
 
 class ClassSeeker {
@@ -69,7 +71,7 @@ class ClassSeeker {
         return final.sort();
     }
 
-    public filterUnique(array: Any){
+    public filterUnique(array: any){
         return array.filter((v, i, a) => a.indexOf(v) === i);
     }
 
