@@ -1,4 +1,4 @@
-import {window, commands, Disposable, ExtensionContext, StatusBarAlignment, StatusBarItem, TextDocument} from 'vscode';
+import { window, commands, ExtensionContext, TextDocument } from 'vscode';
 
 export function activate(context: ExtensionContext) {
 
