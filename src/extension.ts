@@ -6,21 +6,23 @@ export function activate(context: ExtensionContext) {
 
     let disposableUnique = commands.registerCommand('extension.showUnique', () => {
         const classesArray = classSeeker.updateClasses(true);
-        let outputPanel = window.createOutputChannel("CSS classes");
-        outputPanel.appendLine(`There are ${classesArray.length} classes present in your document:`);
-        outputPanel.appendLine(classesArray.join('\n'));
-        outputPanel.show(true);
-        console.log('Time to get classy!');
+        displayList(classesArray, 'unique');
+        console.log('Time to get unique and classy!');
     });
 
     let disposableAll = commands.registerCommand('extension.showAll', () => {
         const classesArray = classSeeker.updateClasses(false);
-        let outputPanel = window.createOutputChannel("CSS classes");
-        outputPanel.appendLine(`There are ${classesArray.length} classes present in your document:`);
-        outputPanel.appendLine(classesArray.join('\n'));
-        outputPanel.show(true);
+        displayList(classesArray, 'total');
         console.log('Time to get classy!');
-    })
+    });
+
+    function displayList(classes: Array<string>, message: String) {
+        let outputPanel = window.createOutputChannel("HTML classes");
+        outputPanel.appendLine(`There are ${classes.length} ${message} classes present in your document:`);
+        outputPanel.appendLine(classes.join('\n'));
+        outputPanel.show(true);
+        console.log('Time to get totally classy!');
+    }
 
     // Add to a list of disposables which are disposed when this extension is deactivated.
     context.subscriptions.push(classSeeker);
