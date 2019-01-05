@@ -21,7 +21,7 @@ export function activate(context: ExtensionContext) {
 
     function displayList(classes: Array<string>, message: String) {
         let outputPanel = window.createOutputChannel("HTML classes");
-        const output = `There are ${classes.length} ${message} classes present in your document:`
+        const output = `>>> There are ${classes.length} classes in ${message} present in your document`
         outputPanel.appendLine(output);
         outputPanel.appendLine(classes.join('\n'));
         outputPanel.appendLine(output);
@@ -30,7 +30,7 @@ export function activate(context: ExtensionContext) {
 
     function displayFrequency(pairArray: String[][], message: String) {
         let outputPanel = window.createOutputChannel("HTML classes");
-        const output = `There are ${pairArray.length} ${message} classes present in your document:`
+        const output = `>>> There are ${pairArray.length} ${message} classes present in your document`
         outputPanel.appendLine(output);
         pairArray.forEach(element => {
             outputPanel.appendLine(element.join(' '))
@@ -41,9 +41,9 @@ export function activate(context: ExtensionContext) {
 
     // Add to a list of disposables which are disposed when this extension is deactivated.
     context.subscriptions.push(classSeeker);
-    context.subscriptions.push(showUniqueClasses);
     context.subscriptions.push(showAllClasses);
     context.subscriptions.push(showAllClassesSorted);
+    context.subscriptions.push(showUniqueClasses);
 }
 
 class ClassSeeker {
