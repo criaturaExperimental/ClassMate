@@ -2,7 +2,7 @@
     "name": "classmate",
     "displayName": "ClassMate",
     "description": "Displays all the classes present in an HTML file",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "author": {
         "name": "Lucas deGomez"
     },
@@ -21,7 +21,7 @@
         "color": "#5481ec",
         "theme": "light"
     },
-    "icon": "/icon.png",
+    "icon": "icon.png",
     "activationEvents": [
         "onCommand:extension.showUnique",
         "onCommand:extension.showAll"
