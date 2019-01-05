@@ -92,9 +92,10 @@ class ClassSeeker {
         let allClassesArray = [];
 
         classTags.forEach( item => {
-            let input;
-            input = item.match(patternClassName)[0].replace(/"/g, "").split(" ");
-            allClassesArray = allClassesArray.concat(input);
+            let classNameArray;
+            classNameArray = item.match(patternClassName)[0].replace(/"/g, "").split(" ");
+            let filtered = classNameArray.filter(element => element !== '');
+            allClassesArray = allClassesArray.concat(filtered);
         });
         return allClassesArray;
     }
