@@ -30,14 +30,19 @@
     "contributes": {
         "commands": [
             {
-                "command": "extension.showUnique",
-                "category": "ClassMate: ",
-                "title": "Show unique classes"
-            },
-            {
                 "command": "extension.showAll",
                 "category": "ClassMate: ",
                 "title": "Show all the classes"
+            },
+            {
+                "command": "extension.showAllSorted",
+                "category": "ClassMate: ",
+                "title": "Show all the classes (sorted)"
+            },
+            {
+                "command": "extension.showUnique",
+                "category": "ClassMate: ",
+                "title": "Show unique classes"
             }
         ]
     },
