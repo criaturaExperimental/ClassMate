@@ -16,7 +16,7 @@ export function activate(context: ExtensionContext) {
 
     let showUniqueClasses = commands.registerCommand('extension.showUnique', () => {
         let classesFrequency = classSeeker.getUniqueClasses();
-        displayFrequency(classesFrequency, 'unique');
+        displayList(classesFrequency, 'unique');
     });
 
     function displayList(classes: Array<string>, message: String) {
@@ -24,17 +24,6 @@ export function activate(context: ExtensionContext) {
         const output = `>>> There are ${classes.length} classes in ${message} present in your document`
         outputPanel.appendLine(output);
         outputPanel.appendLine(classes.join('\n'));
-        outputPanel.appendLine(output);
-        outputPanel.show(true);
-    }
-
-    function displayFrequency(pairArray: String[][], message: String) {
-        let outputPanel = window.createOutputChannel("HTML classes");
-        const output = `>>> There are ${pairArray.length} ${message} classes present in your document`
-        outputPanel.appendLine(output);
-        pairArray.forEach(element => {
-            outputPanel.appendLine(element.join(' '))
-        })
         outputPanel.appendLine(output);
         outputPanel.show(true);
     }
@@ -57,7 +46,7 @@ class ClassSeeker {
     }
 
     public getUniqueClasses() {
-        return this.arrayFrequency(this.getAllClassesSorted());
+        return this.arrayFrequency(this.getAllClasses());
     }
 
     private arrayFrequency(array: any[]) {
@@ -73,9 +62,16 @@ class ClassSeeker {
     }
 
     private frequencyToArray(obj: Object) {
-        return Object.keys(obj).map(function(key) {
-            return [key, `[${String(obj[key])}]`];
+        const pairArray = Object.keys(obj).map(function(key) {
+            return [key, obj[key]];
         });
+        const sortedPairArray = pairArray.sort(function(a, b) {
+            return b[1] - a[1];
+        });
+        return this.bracketFrequency(sortedPairArray);
+    }
+    private bracketFrequency(pairArray: any) {
+        return pairArray.map(pair => `${pair[0]} [${pair[1]}]`);
     }
 
     private getTextDocument() {

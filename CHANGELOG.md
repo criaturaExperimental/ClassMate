@@ -1,9 +1,9 @@
 # Change Log
 
 ## 1.0.0
-- Features unique classes and redundant searches
-- Adds extension icon
+- Shows all the classes
+- Shows all the classes sorted alphabetically
+- Shows unique classes with the number of appearances sorted by frequency
 
 ## 0.0.1 Initial release
-- Displays results on output
 - Shows the total count for unique classes
