@@ -104,48 +104,6 @@ class ClassSeeker {
         return allClassesArray;
     }
 
-    public updateClasses(unique: Boolean) {
-        // Get the current text editor
-        let editor = window.activeTextEditor;
-        if (!editor) {
-            console.log('no file in editor');
-            return;
-        }
-        let doc = editor.document;
-        let classNames = this.getClasses(doc, unique);
-        return classNames
-    }
-
-    public getClasses(doc: TextDocument, unique: Boolean) {
-        let result;
-        let docContent = doc.getText();
-        if (unique) {
-            result = this.filterUnique(this.searchClasses(docContent));
-        } else {
-            result = this.searchClasses(docContent);
-        }
-        return result;
-    }
-
-    public searchClasses(rawText: String) {
-        const patternClass = /class="([^":{}]+)"/g;
-        const patternClassName = /"((?:\\.|[^"\\])*)"/g;
-
-        let res = rawText.match(patternClass);
-        let final = [];
-
-        res.forEach(function(item) {
-            let input;
-            input = item.match(patternClassName)[0].replace(/"/g, "").split(" ");
-            final = final.concat(input);
-        });
-        return final.sort();
-    }
-
-    public filterUnique(array: any){
-        return array.filter((v, i, a) => a.indexOf(v) === i);
-    }
-
     dispose() {
 
     }
