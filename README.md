@@ -1,14 +1,24 @@
 # Classmate VS code extension
 
-> Current state **WIP**.
-
 Are you curious about how many classes your html ended up with? And the name of all of them?
 
-Displays all the classes present in your HTML document.
+## How it works?
+Open an HTML file and from the command palette run one of the following the classmate command that opens an output panel displaying the information.
 
-## Features
+_Classmate: Show all the classes_
 
-Displays all the unique classes in output and a total counter.
+- All the classes present in your HTML document right in the order they appear.
+- The number of classes present.
+
+_Classmate: Show all the classes (sorted)_
+
+- All the classes present in your HTML document sorted alphabetically.
+- The number of classes present.
+
+_Classmate: Show unique classes_
+
+- The names of the classes present in your HTML document.
+- How many times they appear in the document.
 
 ## Requirements
 VS code
