@@ -61,7 +61,7 @@ class ClassSeeker {
     }
 
     private arrayFrequency(array: any[]) {
-        const output = array.reduce(function (acc, curr) {
+        const reducedArray = array.reduce(function (acc, curr) {
             if (typeof acc[curr] == 'undefined') {
               acc[curr] = 1;
             } else {
@@ -69,14 +69,13 @@ class ClassSeeker {
             }
             return acc;
           }, {});
-        return this.frequencyToArray(output);
+        return this.frequencyToArray(reducedArray);
     }
 
     private frequencyToArray(obj: Object) {
-        let array = Object.keys(obj).map(function(key) {
+        return Object.keys(obj).map(function(key) {
             return [key, `[${String(obj[key])}]`];
         });
-        return array;
     }
 
     private getTextDocument() {
